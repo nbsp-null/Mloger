@@ -32,6 +32,7 @@ class ProxyServer:
             '--listen-host', '0.0.0.0',
             '-p', str(self.http_proxy_port),
             # '--set', 'confdir=/root/.mitmproxy/',
+             '--set', 'block_global=false',
             '> ./log/http.log'
         ]
         if self.http_proxy_switch:
@@ -44,6 +45,7 @@ class ProxyServer:
             '-p', str(self.socks5_proxy_port),
             # '--set', 'confdir=/root/.mitmproxy/',
             '--mode', 'socks5',
+             '--set', 'block_global=false',
             '--rawtcp',
             '> ./log/socks.log'
         ]
