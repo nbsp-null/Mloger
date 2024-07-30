@@ -12,7 +12,7 @@ try{ db.getCollection("connections").createIndex({"client_host":1},{background:1
 try{ db.getCollection("intercept").createIndex({"status":1},{background:1, unique:false })}catch(e){print(e)}
 try{ db.getCollection("intercept").createIndex({"type":1},{background:1, unique:false })}catch(e){print(e)}
 try{ db.getCollection("repeater").createIndex({"describe":1},{background:1, unique:false })}catch(e){print(e)}
-try{ db.getCollection("repeater").createIndex({"_id":-1},{background:1, unique:false })}catch(e){print(e)}
+try { db.getCollection("repeater").createIndex({_id: 1});} catch (e) {  print(e); }
 try{ db.getCollection("repeater").createIndex({"host":1},{background:1, unique:false })}catch(e){print(e)}
 try{ db.getCollection("repeater").createIndex({"describe":1},{background:1, unique:false })}catch(e){print(e)}
 try{ db.getCollection("repeater").createIndex({"overview_repeater_id":1},{background:1, unique:false })}catch(e){print(e)}
@@ -20,7 +20,7 @@ try{ db.getCollection("request_data").createIndex({"path":-1,"host":-1},{backgro
 try{ db.getCollection("request_data").createIndex({"path":1},{background:1, unique:false })}catch(e){print(e)}
 try{ db.getCollection("request_data").createIndex({"host":1},{background:1, unique:false })}catch(e){print(e)}
 try{ db.getCollection("request_data").createIndex({"update_time":1},{background:1, unique:false })}catch(e){print(e)}
-try{ db.getCollection("request_data").createIndex({"_id":-1},{background:1, unique:false })}catch(e){print(e)}
+try { db.getCollection("request_data").createIndex({_id: 1});} catch (e) {  print(e); }
 try{ db.getCollection("request_data").createIndex({"client_ip":1},{background:1, unique:false })}catch(e){print(e)}
 try{ db.getCollection("request_data").createIndex({"exclude":1},{background:1, unique:false })}catch(e){print(e)}
 try{ db.getCollection("request_data").createIndex({"wait_response":1},{background:1, unique:false })}catch(e){print(e)}
@@ -29,7 +29,7 @@ try{ db.getCollection("request_data").createIndex({"user_name":1},{background:1,
 try{ db.getCollection("request_data").createIndex({"isshow":1},{background:1, unique:false })}catch(e){print(e)}
 try{ db.getCollection("response_data").createIndex({"update_time":1},{background:1, unique:false })}catch(e){print(e)}
 try{ db.getCollection("response_data").createIndex({"req_id":1},{background:1, unique:false })}catch(e){print(e)}
-try{ db.getCollection("response_data").createIndex({"_id":-1},{background:1, unique:false })}catch(e){print(e)}
+try { db.getCollection("response_data").createIndex({_id: 1});} catch (e) {  print(e); }
 try{ db.getCollection("response_data").createIndex({"client_ip":-1},{background:1, unique:false })}catch(e){print(e)}
 try{ db.getCollection("response_data").createIndex({"exclude":-1},{background:1, unique:false })}catch(e){print(e)}
 try{ db.getCollection("tcp").createIndex({"exclude":1},{background:1, unique:false })}catch(e){print(e)}
