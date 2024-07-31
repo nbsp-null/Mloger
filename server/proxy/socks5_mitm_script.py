@@ -45,7 +45,7 @@ def request(flow: http.HTTPFlow) -> None:
         try:
             if flow.request:
                 user_name = get_user_name_by_ip_for_redis(client_ip)
-                                raw_content = flow.request.get_content(strict=False)
+                raw_content = flow.request.get_content(strict=False)
                 content = raw_content.decode('latin-1')
                 crypto, crypto_data = handle_crypto(flow.request.host, flow.request.path, content)
                 data = {
