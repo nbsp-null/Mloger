@@ -124,6 +124,14 @@ class Repeater(object):
                 self.res = {'status_code': res.status, 'reason': res.reason, 'content': res.read(),
                             'text': res.read()}
             else:
+                class SSLAdapter(HTTPAdapter):
+                    def __init__(self, ssl_context=None, *args, **kwargs):
+                        self.ssl_context = ssl_context
+                        super().__init__(*args, **kwargs)
+                
+                    def init_poolmanager(self, *args, **kwargs):
+                        kwargs['ssl_context'] = self.ssl_context
+                        return super().init_poolmanager(*args, **kwargs)
                 ssl_context = ssl.create_default_context()
                 ssl_context.check_hostname = False
                 ssl_context.verify_mode = ssl.CERT_NONE 
@@ -132,8 +140,11 @@ class Repeater(object):
                 ssl_context.options |= ssl.OP_NO_TLSv1
                 ssl_context.options |= ssl.OP_NO_TLSv1_1
                 ssl_context.options |= ssl.OP_NO_RENEGOTIATION  
-                self.res = requests.request(method=self.method, url=self.url, headers=self.headers,
-                                            data=self.text.encode(), verify=ssl_context, proxies=self.proxy)
+                session = requests.Session()
+                adapter = SSLAdapter(ssl_context)
+                session.mount('https://', adapter)
+                self.res = session.request(method=self.method, url=self.url, headers=self.headers,
+                                            data=self.text.encode(), verify=False, proxies=self.proxy)
             self.deal_res()
         except Exception as e:
             raise e
