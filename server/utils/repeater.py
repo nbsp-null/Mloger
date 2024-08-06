@@ -6,7 +6,7 @@ import json
 import re
 from concurrent.futures import ThreadPoolExecutor
 from itertools import product
-
+import ssl
 import requests
 import urllib3
 from hyper import HTTP20Connection
@@ -124,8 +124,16 @@ class Repeater(object):
                 self.res = {'status_code': res.status, 'reason': res.reason, 'content': res.read(),
                             'text': res.read()}
             else:
+                ssl_context = ssl.create_default_context()
+                ssl_context.check_hostname = False
+                ssl_context.verify_mode = ssl.CERT_NONE 
+                ssl_context.options |= ssl.OP_NO_SSLv2
+                ssl_context.options |= ssl.OP_NO_SSLv3
+                ssl_context.options |= ssl.OP_NO_TLSv1
+                ssl_context.options |= ssl.OP_NO_TLSv1_1
+                ssl_context.options |= ssl.OP_NO_RENEGOTIATION  
                 self.res = requests.request(method=self.method, url=self.url, headers=self.headers,
-                                            data=self.text.encode(), verify=False, proxies=self.proxy)
+                                            data=self.text.encode(), verify=ssl_context, proxies=self.proxy)
             self.deal_res()
         except Exception as e:
             raise e
